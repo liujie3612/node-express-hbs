@@ -1,12 +1,13 @@
 var express = require('express');
 var app = express();
 var favicon = require('static-favicon');
+var path = require('path');
+app.set('views', path.join(__dirname, 'views'));
 var exphbs = require('express3-handlebars');
 app.engine('handlebars', exphbs({
     defaultLayout: 'main'
 }));
 app.set('view engine', 'handlebars');
-
 app.get('/', function(req, res) {
     var Number = Math.round(Math.random() * 10);
     res.render('index', {
