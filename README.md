@@ -9,9 +9,9 @@
 
 ## Defective
 
-1 gulp
-2 bower
-3  route
+1. gulp
+2. bower
+3.  route
 
 
 
