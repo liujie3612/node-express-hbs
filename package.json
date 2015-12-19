@@ -1,19 +1,20 @@
 {
-  "name": "node-express-hbs",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "nodejs ./bin/www"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.13.3",
-    "express3-handlebars": "^0.5.2"
-  },
-  "devDependencies": {
-    "debug": "^2.2.0",
-    "static-favicon": "^1.0.2"
-  }
+    "name": "node-express-hbs",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "private": true,
+    "scripts": {
+        "start": "nodejs ./bin/www"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.13.3",
+        "express3-handlebars": "^0.5.2"
+    },
+    "devDependencies": {
+        "debug": "^2.2.0",
+        "static-favicon": "^1.0.2"
+    }
 }
