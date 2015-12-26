@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var hbs = require('hbs');
 
 var routes = require('./routes/index');
+var account = require('./routes/account');
 var about = require('./routes/about');
 var app = express();
 
@@ -13,13 +14,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
-//set engine
-// app.engine('handlebars', exphbs({
-//     defaultLayout: 'main'
-// }));
 app.set('view engine', 'hbs');
 
+//route
 app.use('/', routes);
+app.use('/account', account);
 app.use('/about', about);
 
 
