@@ -1,26 +1,27 @@
 var express = require('express');
-var app = express();
+var favicon = require('serve-favicon');
 var path = require('path');
-var favicon = require('static-favicon');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var hbs = require('hbs');
+
+var routes = require('./routes/index');
+var about = require('./routes/about');
+var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 
-var exphbs = require('express3-handlebars');
-app.engine('handlebars', exphbs({
-    defaultLayout: 'main'
-}));
+//set engine
+// app.engine('handlebars', exphbs({
+//     defaultLayout: 'main'
+// }));
+app.set('view engine', 'hbs');
 
-app.set('view engine', 'handlebars');
-app.get('/', function(req, res) {
-    var Number = Math.round(Math.random() * 10);
-    res.render('index', {
-        luckyNumber: Number
-    });
-});
-app.get('/about', function(req, res) {
-    res.render('about');
-})
-app.use('/public', express.static('public'));
+app.use('/', routes);
+app.use('/about', about);
+
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
