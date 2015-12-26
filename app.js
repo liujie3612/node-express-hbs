@@ -12,6 +12,7 @@ var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
+hbs.registerPartials(__dirname + '/views/included');
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
 app.set('view engine', 'hbs');
