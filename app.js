@@ -3,6 +3,7 @@ var favicon = require('serve-favicon');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var logger = require('morgan');
 var hbs = require('hbs');
 
 var routes = require('./routes/index');
@@ -16,6 +17,13 @@ hbs.registerPartials(__dirname + '/views/included');
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
 app.set('view engine', 'hbs');
+
+/**/
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+/**/
 
 //route
 app.use('/', routes);
