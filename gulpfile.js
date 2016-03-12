@@ -60,7 +60,7 @@ gulp.task('image', function() {
         .pipe(gulp.dest('dist'))
 })
 
-gulp.task('font', ['copy'], function(done) {
+gulp.task('font',  function(done) {
     var buffers = [];
     gulp
         .src(['app/index.html'])
