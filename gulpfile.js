@@ -2,7 +2,6 @@ var gulp = require('gulp'),
     watch = require('gulp-watch');
 var browserSync = require('browser-sync');
 var clean = require('gulp-clean');
-var useref = require('gulp-useref');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
@@ -13,11 +12,11 @@ var minifyCss = require('gulp-minify-css');
 var usemin = require('gulp-usemin');
 var csso = require('gulp-csso');
 
-
 gulp.task('watch', function() {
     watch(['bower_components/**/*.js',
         'bower_components/**/*.css',
-        'app/**/*.*'
+        'public/**/*.*',
+        'views/**/*.*'
     ], function(event) {
         browserSync.reload(event.path)
     });
@@ -26,11 +25,9 @@ gulp.task('watch', function() {
 gulp.task('serve', ['watch'], function() {
     browserSync.init({
         startPath: '/',
+        files: "**",
         server: {
-            baseDir: "app",
-            routes: {
-                '/bower_components': 'bower_components'
-            }
+            baseDir: "/",
         }
     });
 });
@@ -41,23 +38,21 @@ gulp.task('clean', function() {
         })
         .pipe(clean());
 });
-gulp.task('copy', function() {
-    return gulp.src(['app/*.html', 'app/deck/**/*.*', 'app/mp3/**/*.*'], { base: 'app', 'buffer': false })
-        .pipe(gulp.dest('dist'));
-})
 
 gulp.task('css', function() {
-    return gulp.src('app/styles/**/*.css', { base: 'app' })
+    return gulp.src('public/styles/**/*.css', { base: '.' })
         .pipe(csso())
         .pipe(gulp.dest('dist'))
 })
+
 gulp.task('js', function() {
-    return gulp.src('app/scripts/**/*.js', { base: 'app' })
+    return gulp.src('public/scripts/**/*.js', { base: '.' })
         .pipe(uglify())
         .pipe(gulp.dest('dist'))
 })
+
 gulp.task('image', function() {
-    return gulp.src('app/images/**/*.{svg,png,jpg}', { base: 'app' })
+    return gulp.src('public/images/**/*.{svg,png,jpg}', { base: '.' })
         .pipe(imagemin({
             progressive: true,
             svgoPlugins: [{ removeViewBox: false }]
@@ -74,7 +69,7 @@ gulp.task('font', ['copy'], function(done) {
         })
         .on('end', function() {
             var text = Buffer.concat(buffers).toString('utf-8');
-            gulp.src('app/fonts/fzltxh.ttf')
+            gulp.src('public/fonts/fzltxh.ttf')
                 .pipe(fontmin({
                     text: text
                 }))
@@ -83,4 +78,4 @@ gulp.task('font', ['copy'], function(done) {
         });
 })
 
-gulp.task('build', ['copy', 'css', 'js', 'image', 'font'])
+gulp.task('build', ['css', 'js', 'image', 'font'])
