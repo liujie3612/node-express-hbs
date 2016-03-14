@@ -11,5 +11,4 @@ var usemin = require('gulp-usemin');
 var csso = require('gulp-csso');
 
 
-
 gulp.task('build', ['css', 'js', 'image', 'font']);

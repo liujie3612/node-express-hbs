@@ -6,15 +6,15 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var hbs = require('hbs');
 
-var routes = require('./routes/index');
-var account = require('./routes/account');
-var about = require('./routes/about');
+var routes = require('./app/routes/index');
+var account = require('./app/routes/account');
+var about = require('./app/routes/about');
 var app = express();
 
-app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
-hbs.registerPartials(__dirname + '/views/included');
-app.use(favicon(__dirname + '/public/favicon.ico'));
+app.set('views', path.join(__dirname, 'app/views'));
+app.use(express.static(path.join(__dirname, 'app/public')));
+hbs.registerPartials(__dirname + '/app/views/included');
+app.use(favicon('app/public/favicon.ico'));
 
 app.set('view engine', 'hbs');
 
