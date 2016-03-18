@@ -1,5 +1,7 @@
 var gulp = require('gulp');
-var browsersync = require('browser-sync').create();
+var server = require('gulp-develop-server');
+var bs = require('browser-sync').create();
+
 var clean = require('gulp-clean');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
@@ -10,29 +12,44 @@ var imagemin = require('gulp-imagemin');
 var minifyCss = require('gulp-minify-css');
 var usemin = require('gulp-usemin');
 var csso = require('gulp-csso');
-/*
-gulp.task('browser-sync', function() {
-    browserSync.init({
-        server: {
-            baseDir: "app"
-        }
-    });
-});*/
 
-gulp.task('clean', function () {
-    return gulp.src('dist/*', {
-            read: false
-        })
-        .pipe(clean());
+var options = {
+    server: {
+        path: './bin/www',
+        execArgv: ['--harmony']
+    },
+    bs: {
+        proxy: {
+            target: 'http://localhost:9000',
+            middleware: function(req, res, next) {
+                next();
+            }
+        },
+    }
+};
+
+var serverFiles = [
+    './app/public/styles/*',
+    './app/public/images/*',
+    './app/routes/*.js',
+    './app/views/*'
+];
+
+gulp.task('server:start', function() {
+    server.listen(options.server, function(error) {
+        if (!error)
+            bs.init(options.bs);
+    });
 });
 
-gulp.task('copy', function () {
-    return gulp.src(['bower_components/**/*.*', 'views/**/*.html','README.md', 'config.js', 'app.js', 'bin/www', 'markdown-toc.js', 'marked.js', 'raneto.js', 'content/**/*', 'package.json', 'public/*.*', 'public/fonts/**/*.*', 'node_modules/**/*.*'], {
-            base: '.',
-            'buffer': false
-        })
-        .pipe(gulp.dest('dist'));
-})
+gulp.task('server:restart', function() {
+    server.restart(function(error) {
+        if (!error) bs.reload();
+    });
+});
 
+gulp.task('server', ['server:start'], function() {
+    gulp.watch(serverFiles, ['server:restart'])
+});
 
-gulp.task('build', ['css', 'js', 'image', 'font']);
+// gulp.task('build', ['clean','copy','css', 'js', 'image', 'font']);
