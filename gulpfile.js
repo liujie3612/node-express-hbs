@@ -12,7 +12,6 @@ var imagemin = require('gulp-imagemin');
 var minifyCss = require('gulp-minify-css');
 var usemin = require('gulp-usemin');
 var csso = require('gulp-csso');
-
 var options = {
     server: {
         path: './bin/www',
@@ -32,7 +31,7 @@ var serverFiles = [
     './app/public/styles/*',
     './app/public/images/*',
     './app/routes/*.js',
-    './app/views/*'
+    './app/views/**/*'
 ];
 
 gulp.task('server:start', function() {
@@ -51,5 +50,4 @@ gulp.task('server:restart', function() {
 gulp.task('server', ['server:start'], function() {
     gulp.watch(serverFiles, ['server:restart'])
 });
-
 // gulp.task('build', ['clean','copy','css', 'js', 'image', 'font']);
